@@ -22,6 +22,7 @@ export default function Layout({ children }) {
   const router = useRouter()
   const [isLoggedIn, setIsLoggedIn] = useState(null)
   const [isLogin, setIsLogin] = useState(true)
+  const [loading, setLoading] = useState(true)
   const [isForgotPassword, setIsForgotPassword] = useState(false)
   const [form, setForm] = useState({
     name: null,
@@ -96,16 +97,22 @@ export default function Layout({ children }) {
   }
 
   useEffect(() => {
+    setLoading(true)
     onAuthStateChanged(auth, (user) => {
       console.log(user)
+
       if (user) {
         axios
           .get("/api/auth?userId=" + user.uid)
-          .then((res) => setIsLoggedIn(res.data))
+          .then((res) => {
+            setIsLoggedIn(res.data)
+            setLoading(false)
+          })
           .catch((error) => console.log(error.response))
         // User is signed in
         // Redirect to protected routes or display logged-in content
       } else {
+        setLoading(false)
         setIsLoggedIn(null)
         // User is not signed in
         console.log("User is not signed in")
@@ -124,6 +131,16 @@ export default function Layout({ children }) {
       console.log(error.code, form, "error.code")
       return toast.error("Email atau Kata Sandi Tidak Sesuai")
     }
+  }
+
+  if (loading) {
+    return (
+      <div>
+        <div className="max-w-sm mx-auto mt-8">
+          <p>Loading</p>
+        </div>
+      </div>
+    )
   }
 
   if (!isLoggedIn) {
