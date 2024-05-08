@@ -8,13 +8,12 @@ export default async function handle(req, res) {
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyC13rQELepobcBsW9-WoIvw7FgqGGq7t1s",
-    authDomain: "next-dharma-8802e.firebaseapp.com",
-    projectId: "next-dharma-8802e",
-    storageBucket: "next-dharma-8802e.appspot.com",
-    messagingSenderId: "967175521026",
-    appId: "1:967175521026:web:6f04b1728caaf1ea35b81b"
-
+    apiKey: "AIzaSyCvTj5SBkSbXG9ar-5pOR1PLSsDzr2jV28",
+    authDomain: "dharma-e4a5a.firebaseapp.com",
+    projectId: "dharma-e4a5a",
+    storageBucket: "dharma-e4a5a.appspot.com",
+    messagingSenderId: "604961392968",
+    appId: "1:604961392968:web:049ed35e340d5b818f0b7d",
   };
 
   // Initialize Firebase
