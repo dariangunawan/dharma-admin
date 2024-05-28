@@ -13,6 +13,14 @@ export default async function handler(req, res) {
     res.json(order)
   }
 
+  if (req.method === "PUT") {
+    const { status, orderId } = req.body
+    const order = await Order.findByIdAndUpdate(orderId, {
+      status,
+    })
+    res.json(order)
+  }
+
   if (req.method === "GET") {
     res.json(await Order.find().sort({ createdAt: -1 }))
   }

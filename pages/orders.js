@@ -16,7 +16,7 @@ export default function OrdersPage() {
   }, [])
 
   const updateStatus = (value, orderId) => {
-    axios.post("/api/orders", { paid: value, orderId }).then((response) => {
+    axios.put("/api/orders", { status: value, orderId }).then((response) => {
       loadOrder()
     })
   }
