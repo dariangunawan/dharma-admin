@@ -1,13 +1,16 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose"
 
-const OrderSchema = new Schema({
+const OrderSchema = new Schema(
+  {
     line_items: Object,
     name: String,
     email: String,
     company: String,
-    paid: Boolean,
-}, {
+    paid: Number,
+  },
+  {
     timestamps: true,
-});
+  }
+)
 
-export const Order = models?.Order || model('Order', OrderSchema);
+export const Order = models?.Order || model("Order", OrderSchema)
