@@ -10,6 +10,8 @@ export default async function handle(req, res) {
   const firebaseConfig = {
     apiKey: "AIzaSyCvTj5SBkSbXG9ar-5pOR1PLSsDzr2jV28",
     authDomain: "dharma-e4a5a.firebaseapp.com",
+    databaseURL:
+      "https://dharma-e4a5a-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "dharma-e4a5a",
     storageBucket: "dharma-e4a5a.appspot.com",
     messagingSenderId: "604961392968",
