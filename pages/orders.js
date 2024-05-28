@@ -15,7 +15,7 @@ export default function OrdersPage() {
     loadOrder()
   }, [])
 
-  const updateStatus = (value, orderId) => {
+  const updateStatus = (orderId, value) => {
     axios.put("/api/orders", { status: value, orderId }).then((response) => {
       loadOrder()
     })
