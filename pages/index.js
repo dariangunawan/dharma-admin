@@ -28,8 +28,11 @@ export default function Home() {
         <h2>
           <b>Hello, {isLoggedIn?.name}</b>
         </h2>
-        <div className="flex bg-gray-300 text-black gap-1 rounded-md overflow-hidden">
+        <div className="flex bg-gray-300 text-black gap-1 rounded-md overflow-hidden items-center flex-row">
           <img src={isLoggedIn?.image} alt="" className="w-12 h-12" />
+          <div className="ml-2">
+            <p>{isLoggedIn?.role || "user"}</p>
+          </div>
         </div>
       </div>
     </Layout>
