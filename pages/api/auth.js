@@ -19,7 +19,11 @@ export default async function handle(req, res) {
 
   if (req.method === "GET") {
     const userId = req.query.userId
-    const result = await User.findOne({ userId })
-    res.json(result)
+    try {
+      const result = await User.findOne({ userId })
+      res.json(result)
+    } catch (error) {
+      res.json({})
+    }
   }
 }
