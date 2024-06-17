@@ -7,6 +7,8 @@ const OrderSchema = new Schema(
     email: String,
     company: String,
     status: String,
+    type_order: String,
+    type_payment: String,
     paid: Number,
   },
   {
