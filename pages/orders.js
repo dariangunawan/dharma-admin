@@ -15,12 +15,6 @@ export default function OrdersPage() {
     loadOrder()
   }, [])
 
-  const updateStatus = (orderId, value) => {
-    axios.put("/api/orders", { status: value, orderId }).then((response) => {
-      loadOrder()
-    })
-  }
-
   return (
     <Layout>
       <h1>Orders</h1>
@@ -31,18 +25,13 @@ export default function OrdersPage() {
             <th>Recipient</th>
             <th>Services</th>
             <th>Nilai</th>
-            <th>Status</th>
+            <th>Type Order</th>
+            <th>Type Pembayaran</th>
           </tr>
         </thead>
         <tbody>
           {orders.length > 0 &&
             orders.map((order) => {
-              const status =
-                order?.paid == 1
-                  ? "Dibayar"
-                  : order?.paid == 2
-                  ? "Selesai"
-                  : "Dibuat"
               return (
                 <tr>
                   <td>{new Date(order.createdAt).toLocaleString()}</td>
@@ -64,19 +53,8 @@ export default function OrdersPage() {
                       0
                     )}
                   </td>
-                  <td>
-                    <select
-                      name="status"
-                      value={status}
-                      onChange={(event) =>
-                        updateStatus(order._id, event.target.value)
-                      }
-                    >
-                      <option value="0">Dibuat</option>
-                      <option value="1">Dibayar</option>
-                      <option value="2">Selesai</option>
-                    </select>
-                  </td>
+                  <td>{order?.type_order || "-"}</td>
+                  <td>{order?.type_payment || "-"}</td>
                 </tr>
               )
             })}
