@@ -15,6 +15,12 @@ export default function OrdersPage() {
     loadOrder()
   }, [])
 
+  const handleChange = (status, orderId) => {
+    axios.put("/api/orders", { status, orderId }).then((response) => {
+      loadOrder()
+    })
+  }
+
   return (
     <Layout>
       <h1>Orders</h1>
@@ -27,6 +33,7 @@ export default function OrdersPage() {
             <th>Nilai</th>
             <th>Type Order</th>
             <th>Type Pembayaran</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +49,9 @@ export default function OrdersPage() {
                   <td>
                     {order.line_items.map((l) => (
                       <>
-                        {l.price_data?.product_data.name} x{l.quantity}
+                        {l.price_data?.product_data?.name ||
+                          l.price_data?.product_data.title}{" "}
+                        x{l.quantity}
                         <br />
                       </>
                     ))}
@@ -55,6 +64,18 @@ export default function OrdersPage() {
                   </td>
                   <td>{order?.type_order || "-"}</td>
                   <td>{order?.type_payment || "-"}</td>
+                  <td>
+                    <select
+                      name=""
+                      id=""
+                      value={order?.status}
+                      onChange={(e) => handleChange(e.target.value, order._id)}
+                    >
+                      <option value="diterima">Diterima</option>
+                      <option value="dikerjakan">Dikerjakan</option>
+                      <option value="selesai">Selesai</option>
+                    </select>
+                  </td>
                 </tr>
               )
             })}
