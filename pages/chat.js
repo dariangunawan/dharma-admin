@@ -140,7 +140,7 @@ const ChatPage = () => {
           set(newMessageRef, {
             nama_pengirim: "Admin",
             nama_penerima: selectedChat?.receiverName,
-            pesan: "Mengirim Sebuah File, Klik Untuk Download",
+            pesan: "Click to download file",
             fileUrl: downloadURL,
             isFile: true,
             tanggal: new Date().toISOString(),
