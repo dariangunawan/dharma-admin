@@ -30,9 +30,9 @@ export default function OrdersPage() {
             <th>Date</th>
             <th>Recipient</th>
             <th>Services</th>
-            <th>Nilai</th>
-            <th>Type Order</th>
-            <th>Type Pembayaran</th>
+            <th>Price</th>
+            <th>Order Type</th>
+            <th>Payment Type</th>
             <th>Status</th>
           </tr>
         </thead>
