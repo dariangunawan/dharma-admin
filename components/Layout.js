@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import FacebookLoginButton from "./FacebookLoginButton"
 import GoogleLoginButton from "./GoogleLoginButton"
+import Spinner from "./Spinner"
 
 export default function Layout({ children }) {
   const [showNav, setShowNav] = useState(false)
@@ -48,7 +49,7 @@ export default function Layout({ children }) {
           ...form,
         })
         .then((res) => {
-          toast.success("Selamat, Register telah berhasil")
+          toast.success("Congratulations, registration success")
           return router.replace("/")
         })
     } catch (error) {
@@ -58,15 +59,15 @@ export default function Layout({ children }) {
         "auth/invalid-value-(email),-starting-an-object-on-a-scalar-field-invalid-value-(password),-starting-an-object-on-a-scalar-field"
       ) {
         // Handle invalid email error
-        return toast.error("Email Tidak Valid")
+        return toast.error("Email invalid")
         // Display user-friendly error message
       } else if (error.code === "auth/invalid-credential") {
         // Handle invalid email error
-        return toast.error("Email atau Kata Sandi Tidak Sesuai")
+        return toast.error("Email or password incorrect")
         // Display user-friendly error message
       } else if (error.code === "auth/email-already-in-use") {
         // Handle invalid email error
-        return toast.error("Email Sudah Terdaftar")
+        return toast.error("Email already registered")
         // Display user-friendly error message
       } else {
         // Handle other FirebaseAuth errors
@@ -77,7 +78,7 @@ export default function Layout({ children }) {
   const handleSignInWithEmailAndPassword = async ({ email, password }) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password)
-      toast.success("Selamat, Login telah berhasil")
+      toast.success("Congratulations, login success")
       return router.replace("/")
     } catch (error) {
       console.log(error.code, form, "error.code")
@@ -86,11 +87,11 @@ export default function Layout({ children }) {
         "auth/invalid-value-(email),-starting-an-object-on-a-scalar-field-invalid-value-(password),-starting-an-object-on-a-scalar-field"
       ) {
         // Handle invalid email error
-        return toast.error("Email Tidak Valid")
+        return toast.error("Email invalid")
         // Display user-friendly error message
       } else if (error.code === "auth/invalid-credential") {
         // Handle invalid email error
-        return toast.error("Email atau Kata Sandi Tidak Sesuai")
+        return toast.error("Email or password incorrect")
         // Display user-friendly error message
       } else {
         // Handle other FirebaseAuth errors
@@ -126,20 +127,21 @@ export default function Layout({ children }) {
   const handleForgotPassword = async ({ email }) => {
     try {
       const result = await sendPasswordResetEmail(auth, email)
-      toast.success("Link Lupa Kata sandi telah dikirim ke email")
+      toast.success("Forgot password link has been sent to email")
       setIsForgotPassword(false)
       setIsLogin(true)
     } catch (error) {
       console.log(error.code, form, "error.code")
-      return toast.error("Email atau Kata Sandi Tidak Sesuai")
+      return toast.error("Email or password incorrect")
     }
   }
 
   if (loading) {
     return (
       <div>
-        <div className="max-w-sm mx-auto mt-8">
-          <p>Loading</p>
+        <div className="max-w-sm mx-auto mt-40 text-center">
+          <Spinner />
+          <p>Loading...</p>
         </div>
       </div>
     )
@@ -152,11 +154,11 @@ export default function Layout({ children }) {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://i.imgur.com/nYikGVf.png"
+              src="https://i.imgur.com/6gZYrSt.png"
               alt="dharma kreasi"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              {isForgotPassword ? "Lupa Kata Sandi" : " Silahkan Masuk"}
+              {isLogin ? "Log in" : "Register"}
             </h2>
           </div>
 
@@ -189,7 +191,7 @@ export default function Layout({ children }) {
                     onClick={(e) => {
                       if (!form.email) {
                         return toast.error(
-                          "Mohon lengkapi form terlebih dahulu"
+                          "Please complete the form"
                         )
                       }
 
@@ -197,13 +199,13 @@ export default function Layout({ children }) {
                     }}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Kirim Link Lupa Kata Sandi
+                    Send forget password link
                   </button>
                 </div>
               </form>
 
               <p className="mt-10 text-center text-sm text-gray-500">
-                Ingat Kata Sandi?
+                Remember password?
                 <a
                   href="#"
                   onClick={(e) => {
@@ -213,7 +215,7 @@ export default function Layout({ children }) {
                   }}
                   className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2"
                 >
-                  Masuk Sekarang
+                  Log in
                 </a>
               </p>
             </div>
@@ -227,7 +229,7 @@ export default function Layout({ children }) {
                         htmlFor="name"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Nama Lengkap
+                        Name
                       </label>
                       <div className="mt-2">
                         <input
@@ -245,7 +247,7 @@ export default function Layout({ children }) {
                         htmlFor="phone"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Nomor Hp
+                        Phone
                       </label>
                       <div className="mt-2">
                         <input
@@ -288,8 +290,9 @@ export default function Layout({ children }) {
                       htmlFor="password"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Kata Sandi
+                      Password
                     </label>
+                    {isLogin && (
                     <div className="text-sm">
                       <a
                         href="#"
@@ -299,9 +302,10 @@ export default function Layout({ children }) {
                         }}
                         className="font-semibold text-indigo-600 hover:text-indigo-500"
                       >
-                        Lupa Kata Sandi?
+                        Forgot password?
                       </a>
                     </div>
+                    )}
                   </div>
                   <div className="mt-2">
                     <input
@@ -333,14 +337,14 @@ export default function Layout({ children }) {
                     }}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Masuk
+                    {isLogin ? "Log in" : "Register"}
                   </button>
                 </div>
               </form>
-              <p className="font-semibold leading-2 text-center mt-6">ATAU</p>
+              <p className="font-semibold leading-2 text-center mt-6">OR</p>
               <div class="flex justify-around items-center mt-6">
                 <GoogleLoginButton />
-                <FacebookLoginButton />
+                {/* <FacebookLoginButton /> */}
               </div>
 
               <MultiLoginButton
@@ -353,7 +357,7 @@ export default function Layout({ children }) {
               />
 
               <p className="mt-10 text-center text-sm text-gray-500">
-                {isLogin ? "Belum Punya Akun?" : "Sudah Punya Akun?"}
+                {isLogin ? "Don't have an account?" : "Have an account?"}
                 <a
                   href="#"
                   onClick={(e) => {
@@ -362,7 +366,7 @@ export default function Layout({ children }) {
                   }}
                   className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2"
                 >
-                  {isLogin ? " Daftar Sekarang" : "Masuk Sekarang"}
+                  {isLogin ? "Register" : "Log in"}
                 </a>
               </p>
             </div>
