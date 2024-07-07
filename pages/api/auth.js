@@ -10,10 +10,10 @@ export default async function handle(req, res) {
   await mongooseConnect()
 
   if (req.method === "POST") {
-    const { userId, name, email, phone, password } = req.body
+    const { userId, name, email, phone, password, role } = req.body
 
     const query = { userId } // Assuming userId is the unique identifier
-    const update = { userId, name, email, phone, password }
+    const update = { userId, name, email, phone, password, role }
 
     try {
       const user = await findOrCreate(query, update)

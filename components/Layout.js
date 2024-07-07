@@ -24,11 +24,13 @@ export default function Layout({ children }) {
   const [isLogin, setIsLogin] = useState(true)
   const [loading, setLoading] = useState(true)
   const [isForgotPassword, setIsForgotPassword] = useState(false)
+  const [role, setRole] = useState("admin")
   const [form, setForm] = useState({
     name: null,
     phone: null,
     email: null,
     password: null,
+    role: "admin",
   })
 
   const handleChange = (value, field) => {
@@ -341,6 +343,15 @@ export default function Layout({ children }) {
                 <FacebookLoginButton />
               </div>
 
+              <MultiLoginButton
+                role={role}
+                isLogin={isLogin}
+                onChange={(value) => {
+                  setRole(value)
+                  setForm((prevState) => ({ ...prevState, role: value }))
+                }}
+              />
+
               <p className="mt-10 text-center text-sm text-gray-500">
                 {isLogin ? "Belum Punya Akun?" : "Sudah Punya Akun?"}
                 <a
@@ -390,6 +401,67 @@ export default function Layout({ children }) {
           {children}
         </div>
       </div>
+    </div>
+  )
+}
+
+const MultiLoginButton = ({ role, isLogin, onChange }) => {
+  return (
+    <div>
+      {role == "admin" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("owner")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Owner" : "Login Owner"}
+        </button>
+      )}
+      {role == "admin" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("designer")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Designer" : "Login Designer"}
+        </button>
+      )}
+      {role == "designer" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("owner")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Owner" : "Login Owner"}
+        </button>
+      )}
+      {role == "designer" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("admin")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Admin" : "Login Admin"}
+        </button>
+      )}
+      {role == "owner" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("designer")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Designer" : "Login Designer"}
+        </button>
+      )}
+      {role == "owner" && (
+        <button
+          type="button"
+          onClick={(e) => onChange("admin")}
+          className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {!isLogin ? "Register Admin" : "Login Admin"}
+        </button>
+      )}
     </div>
   )
 }

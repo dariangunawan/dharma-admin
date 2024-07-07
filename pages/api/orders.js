@@ -24,4 +24,9 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     res.json(await Order.find().sort({ createdAt: -1 }))
   }
+
+  if (req.method === "DELETE") {
+    const { orderId } = req.body
+    res.json(await Order.findByIdAndDelete(orderId))
+  }
 }
