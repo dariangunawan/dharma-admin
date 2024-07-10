@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function logo({ role }) {
+export default function logo({ role = "admin" }) {
   return (
     <Link href={"/"} className="flex gap-1">
       <svg

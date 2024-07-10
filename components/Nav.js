@@ -5,7 +5,7 @@ import Logo from "@/components/Logo"
 import { auth } from "@/lib/firebase"
 import { toast } from "react-toastify"
 
-export default function Nav({ show, role }) {
+export default function Nav({ show, role = "admin" }) {
   const inactiveLink = "flex gap-1 p-1"
   const activeLink = inactiveLink + " bg-white text-blue-900 rounded-lg"
   const router = useRouter()
