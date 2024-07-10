@@ -56,8 +56,7 @@ export default function OrdersPage() {
             <th>Nilai</th>
             <th>Type Order</th>
             {isLoggedIn?.role != "owner" && <th>Type Pembayaran</th>}
-            {isLoggedIn?.role == "designer" ||
-              (isLoggedIn?.role == "admin" && <th>Status</th>)}
+            <th>Status</th>
             {isLoggedIn?.role == "owner" && <th>Penghasilan</th>}
             <th>Aksi</th>
           </tr>
@@ -92,23 +91,20 @@ export default function OrdersPage() {
                   {isLoggedIn?.role != "owner" && (
                     <td>{order?.type_payment || "-"}</td>
                   )}
-                  {isLoggedIn?.role == "designer" ||
-                    (isLoggedIn?.role == "admin" && (
-                      <td>
-                        <select
-                          name=""
-                          id=""
-                          value={order?.status}
-                          onChange={(e) =>
-                            handleChange(e.target.value, order._id)
-                          }
-                        >
-                          <option value="diterima">Diterima</option>
-                          <option value="dikerjakan">Dikerjakan</option>
-                          <option value="selesai">Selesai</option>
-                        </select>
-                      </td>
-                    ))}
+
+                  <td>
+                    <select
+                      name=""
+                      id=""
+                      value={order?.status}
+                      onChange={(e) => handleChange(e.target.value, order._id)}
+                    >
+                      <option value="diterima">Diterima</option>
+                      <option value="dikerjakan">Dikerjakan</option>
+                      <option value="selesai">Selesai</option>
+                    </select>
+                  </td>
+
                   {isLoggedIn?.role == "owner" && (
                     <td>
                       {order.line_items.reduce(

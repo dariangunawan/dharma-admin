@@ -190,9 +190,7 @@ export default function Layout({ children }) {
                     type="button"
                     onClick={(e) => {
                       if (!form.email) {
-                        return toast.error(
-                          "Please complete the form"
-                        )
+                        return toast.error("Please complete the form")
                       }
 
                       return handleForgotPassword(form)
@@ -293,18 +291,18 @@ export default function Layout({ children }) {
                       Password
                     </label>
                     {isLogin && (
-                    <div className="text-sm">
-                      <a
-                        href="#"
-                        onClick={(event) => {
-                          event.preventDefault()
-                          setIsForgotPassword(true)
-                        }}
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
+                      <div className="text-sm">
+                        <a
+                          href="#"
+                          onClick={(event) => {
+                            event.preventDefault()
+                            setIsForgotPassword(true)
+                          }}
+                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
                     )}
                   </div>
                   <div className="mt-2">
@@ -396,11 +394,11 @@ export default function Layout({ children }) {
           </svg>
         </button>
         <div className="flex grow justify-center mr-6">
-          <Logo />
+          <Logo role={isLoggedIn?.role || "admin"} />
         </div>
       </div>
       <div className="min-h-screen flex">
-        <Nav show={showNav} />
+        <Nav show={showNav} role={isLoggedIn?.role || "admin"} />
         <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">
           {children}
         </div>

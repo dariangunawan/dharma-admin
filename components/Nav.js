@@ -5,7 +5,7 @@ import Logo from "@/components/Logo"
 import { auth } from "@/lib/firebase"
 import { toast } from "react-toastify"
 
-export default function Nav({ show }) {
+export default function Nav({ show, role }) {
   const inactiveLink = "flex gap-1 p-1"
   const activeLink = inactiveLink + " bg-white text-blue-900 rounded-lg"
   const router = useRouter()
@@ -21,15 +21,17 @@ export default function Nav({ show }) {
         console.error("Error signing out:", error)
       })
   }
+
+  const isOwner = role == "owner" ? "bg-red-900" : "bg-green-900"
+  const isAdmin = role == "admin" ? "bg-blue-900" : isOwner
   return (
     <aside
-      className={
-        (show ? "left-0" : "-left-full") +
-        " top-0 text-white p-4 pr-0 mr-4 fixed w-full bg-blue-900 h-full transition-all md:static md:w-auto"
-      }
+      className={`${
+        show ? "left-0" : "-left-full"
+      } top-0 text-white p-4 pr-0 mr-4 fixed w-full ${isAdmin} h-full transition-all md:static md:w-auto`}
     >
       <div className="mb-4 mr-4">
-        <Logo />
+        <Logo role={role} />
       </div>
       <nav className="flex flex-col gap-2">
         <Link
