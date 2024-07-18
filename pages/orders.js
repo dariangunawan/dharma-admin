@@ -99,8 +99,8 @@ export default function OrdersPage() {
                       value={order?.status}
                       onChange={(e) => handleChange(e.target.value, order._id)}
                     >
-                      <option value="diterima">Diterima</option>
-                      <option value="dikerjakan">Dikerjakan</option>
+                      <option value="pending">Pending</option>
+                      <option value="dikerjakan">Diterima, dikerjakan</option>
                       <option value="selesai">Selesai</option>
                     </select>
                   </td>
