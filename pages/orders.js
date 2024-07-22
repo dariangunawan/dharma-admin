@@ -58,7 +58,7 @@ export default function OrdersPage() {
             {isLoggedIn?.role != "owner" && <th>Type Pembayaran</th>}
             <th>Status</th>
             {isLoggedIn?.role == "owner" && <th>Penghasilan</th>}
-            <th>Aksi</th>
+            {/* <th>Aksi</th> */}
           </tr>
         </thead>
         <tbody>
@@ -100,7 +100,8 @@ export default function OrdersPage() {
                       onChange={(e) => handleChange(e.target.value, order._id)}
                     >
                       <option value="pending">Pending</option>
-                      <option value="dikerjakan">Diterima, dikerjakan</option>
+                      <option value="diterima">Diterima</option>
+                      <option value="dikerjakan">Dikerjakan</option>
                       <option value="selesai">Selesai</option>
                     </select>
                   </td>
@@ -113,11 +114,13 @@ export default function OrdersPage() {
                       )}
                     </td>
                   )}
+                  {/*
                   <td>
                     <button onClick={() => deleteOrder(order._id)}>
                       Hapus
                     </button>
                   </td>
+                  */}
                 </tr>
               )
             })}
