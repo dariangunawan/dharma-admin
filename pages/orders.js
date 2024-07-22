@@ -101,6 +101,7 @@ export default function OrdersPage() {
                     >
                       <option value="pending">Pending</option>
                       <option value="diterima">Diterima</option>
+                      <option value="ditolak">Ditolak</option>
                       <option value="dikerjakan">Dikerjakan</option>
                       <option value="selesai">Selesai</option>
                     </select>
