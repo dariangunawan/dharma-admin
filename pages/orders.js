@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout"
+import ModalFile from "@/components/ModalFile"
 import { auth } from "@/lib/firebase"
 import axios from "axios"
 import { onAuthStateChanged } from "firebase/auth"
@@ -58,7 +59,7 @@ export default function OrdersPage() {
             {isLoggedIn?.role != "owner" && <th>Type Pembayaran</th>}
             <th>Status</th>
             {isLoggedIn?.role == "owner" && <th>Penghasilan</th>}
-            {/* <th>Aksi</th> */}
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -93,18 +94,33 @@ export default function OrdersPage() {
                   )}
 
                   <td>
-                    <select
-                      name=""
-                      id=""
-                      value={order?.status}
-                      onChange={(e) => handleChange(e.target.value, order._id)}
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="diterima">Diterima</option>
-                      <option value="ditolak">Ditolak</option>
-                      <option value="dikerjakan">Dikerjakan</option>
-                      <option value="selesai">Selesai</option>
-                    </select>
+                    {isLoggedIn?.role == "owner" ? (
+                      order?.status
+                    ) : (
+                      <select
+                        name=""
+                        id=""
+                        value={order?.status}
+                        onChange={(e) =>
+                          handleChange(e.target.value, order._id)
+                        }
+                      >
+                        {isLoggedIn?.role == "admin" && (
+                          <>
+                            <option value="pending">Pending</option>
+                            <option value="diterima">Diterima</option>
+                            <option value="ditolak">Ditolak</option>
+                          </>
+                        )}
+
+                        {isLoggedIn?.role == "designer" && (
+                          <>
+                            <option value="dikerjakan">Dikerjakan</option>
+                            <option value="selesai">Selesai</option>
+                          </>
+                        )}
+                      </select>
+                    )}
                   </td>
 
                   {isLoggedIn?.role == "owner" && (
@@ -115,13 +131,14 @@ export default function OrdersPage() {
                       )}
                     </td>
                   )}
-                  {/*
+
                   <td>
-                    <button onClick={() => deleteOrder(order._id)}>
-                      Hapus
-                    </button>
+                    <ModalFile
+                      orderId={order?._id}
+                      files={order?.files || []}
+                      refetch={() => loadOrder(isLoggedIn?.email)}
+                    />
                   </td>
-                  */}
                 </tr>
               )
             })}
