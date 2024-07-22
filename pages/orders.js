@@ -97,29 +97,36 @@ export default function OrdersPage() {
                     {isLoggedIn?.role == "owner" ? (
                       order?.status
                     ) : (
-                      <select
-                        name=""
-                        id=""
-                        value={order?.status}
-                        onChange={(e) =>
-                          handleChange(e.target.value, order._id)
-                        }
-                      >
+                      <>
                         {isLoggedIn?.role == "admin" && (
-                          <>
+                          <select
+                            name=""
+                            id=""
+                            value={order?.status}
+                            onChange={(e) =>
+                              handleChange(e.target.value, order._id)
+                            }
+                          >
                             <option value="pending">Pending</option>
                             <option value="diterima">Diterima</option>
                             <option value="ditolak">Ditolak</option>
-                          </>
+                          </select>
                         )}
 
                         {isLoggedIn?.role == "designer" && (
-                          <>
+                          <select
+                            name=""
+                            id=""
+                            value={order?.status}
+                            onChange={(e) =>
+                              handleChange(e.target.value, order._id)
+                            }
+                          >
                             <option value="dikerjakan">Dikerjakan</option>
                             <option value="selesai">Selesai</option>
-                          </>
+                          </select>
                         )}
-                      </select>
+                      </>
                     )}
                   </td>
 
