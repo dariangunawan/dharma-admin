@@ -20,7 +20,11 @@ export default function OrdersPage() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         axios.get("/api/auth?userId=" + user.uid).then((res) => {
-          setIsLoggedIn({ ...res.data, image: user?.photoURL })
+          setIsLoggedIn({
+            ...res.data,
+            image: user?.photoURL,
+            role: res.data?.role || "admin",
+          })
         })
         // User is signed in
         // Redirect to protected routes or display logged-in content
