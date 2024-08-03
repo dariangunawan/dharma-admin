@@ -37,8 +37,8 @@ export default function OrdersPage() {
     })
   }, [])
 
-  const handleChange = (status, orderId) => {
-    axios.put("/api/orders", { status, orderId }).then((response) => {
+  const handleChange = (value, orderId) => {
+    axios.put("/api/orders", { ...value, orderId }).then((response) => {
       loadOrder()
     })
   }
@@ -61,7 +61,8 @@ export default function OrdersPage() {
             <th>Nilai</th>
             <th>Type Order</th>
             {isLoggedIn?.role != "owner" && <th>Type Pembayaran</th>}
-            <th>Status</th>
+            <th>Status Admin</th>
+            <th>Status Designer</th>
             {isLoggedIn?.role == "owner" && <th>Penghasilan</th>}
             <th>Aksi</th>
           </tr>
@@ -108,7 +109,13 @@ export default function OrdersPage() {
                             id=""
                             value={order?.status}
                             onChange={(e) =>
-                              handleChange(e.target.value, order._id)
+                              handleChange(
+                                {
+                                  status_designer: order?.status_designer,
+                                  status: e.target.value,
+                                },
+                                order._id
+                              )
                             }
                           >
                             <option value="pending">Pending</option>
@@ -116,14 +123,27 @@ export default function OrdersPage() {
                             <option value="ditolak">Ditolak</option>
                           </select>
                         )}
-
+                      </>
+                    )}
+                  </td>
+                  <td>
+                    {isLoggedIn?.role == "owner" ? (
+                      order?.status
+                    ) : (
+                      <>
                         {isLoggedIn?.role == "designer" && (
                           <select
                             name=""
                             id=""
-                            value={order?.status}
+                            value={order?.status_designer}
                             onChange={(e) =>
-                              handleChange(e.target.value, order._id)
+                              handleChange(
+                                {
+                                  status: order?.status,
+                                  status_designer: e.target.value,
+                                },
+                                order._id
+                              )
                             }
                           >
                             <option value="dikerjakan">Dikerjakan</option>
@@ -145,6 +165,7 @@ export default function OrdersPage() {
 
                   <td>
                     <ModalFile
+                      role={isLoggedIn?.role}
                       orderId={order?._id}
                       files={order?.files || []}
                       refetch={() => loadOrder(isLoggedIn?.email)}

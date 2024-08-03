@@ -3,7 +3,7 @@ import { Button, Card, message, Modal, Table, Upload } from "antd"
 import { storage } from "@/lib/firebase"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import axios from "axios"
-const ModalFile = ({ orderId, refetch, files = [] }) => {
+const ModalFile = ({ orderId, refetch, role, files = [] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [fileList, setFileList] = useState([])
   const showModal = () => {
@@ -47,12 +47,26 @@ const ModalFile = ({ orderId, refetch, files = [] }) => {
             },
           ]
           setFileList(newFileLists)
-
-          axios
-            .put("/api/orders", { orderId, files: newFileLists })
-            .then((response) => {
-              refetch()
-            })
+          if (role == "designer") {
+            axios
+              .put("/api/orders", {
+                orderId,
+                files: newFileLists,
+                status_designer: "terkirim",
+              })
+              .then((response) => {
+                refetch()
+              })
+          } else {
+            axios
+              .put("/api/orders", {
+                orderId,
+                files: newFileLists,
+              })
+              .then((response) => {
+                refetch()
+              })
+          }
         } catch (error) {
           onError(error)
           message.error(`${file.name} file upload failed.`)
