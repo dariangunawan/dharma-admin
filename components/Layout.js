@@ -345,14 +345,16 @@ export default function Layout({ children }) {
                 {/* <FacebookLoginButton /> */}
               </div>
 
-              <MultiLoginButton
-                role={role}
-                isLogin={isLogin}
-                onChange={(value) => {
-                  setRole(value)
-                  setForm((prevState) => ({ ...prevState, role: value }))
-                }}
-              />
+              {!isLogin && (
+                <MultiLoginButton
+                  role={role}
+                  isLogin={isLogin}
+                  onChange={(value) => {
+                    setRole(value)
+                    setForm((prevState) => ({ ...prevState, role: value }))
+                  }}
+                />
+              )}
 
               <p className="mt-10 text-center text-sm text-gray-500">
                 {isLogin ? "Don't have an account?" : "Have an account?"}

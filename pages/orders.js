@@ -61,8 +61,8 @@ export default function OrdersPage() {
             <th>Nilai</th>
             <th>Type Order</th>
             {isLoggedIn?.role != "owner" && <th>Type Pembayaran</th>}
-            <th>Status Admin</th>
-            <th>Status Designer</th>
+            <th>Status Update</th>
+            <th>Status</th>
             {isLoggedIn?.role == "owner" && <th>Penghasilan</th>}
             <th>Aksi</th>
           </tr>
@@ -111,7 +111,6 @@ export default function OrdersPage() {
                             onChange={(e) =>
                               handleChange(
                                 {
-                                  status_designer: order?.status_designer,
                                   status: e.target.value,
                                 },
                                 order._id
@@ -123,24 +122,15 @@ export default function OrdersPage() {
                             <option value="ditolak">Ditolak</option>
                           </select>
                         )}
-                      </>
-                    )}
-                  </td>
-                  <td>
-                    {isLoggedIn?.role == "owner" ? (
-                      order?.status
-                    ) : (
-                      <>
                         {isLoggedIn?.role == "designer" && (
                           <select
                             name=""
                             id=""
-                            value={order?.status_designer}
+                            value={order?.status}
                             onChange={(e) =>
                               handleChange(
                                 {
-                                  status: order?.status,
-                                  status_designer: e.target.value,
+                                  status: e.target.value,
                                 },
                                 order._id
                               )
@@ -148,11 +138,13 @@ export default function OrdersPage() {
                           >
                             <option value="dikerjakan">Dikerjakan</option>
                             <option value="selesai">Selesai</option>
+                            <option value="terkirim">Terkirim</option>
                           </select>
                         )}
                       </>
                     )}
                   </td>
+                  <td>{order?.status}</td>
 
                   {isLoggedIn?.role == "owner" && (
                     <td>

@@ -52,7 +52,7 @@ const ModalFile = ({ orderId, refetch, role, files = [] }) => {
               .put("/api/orders", {
                 orderId,
                 files: newFileLists,
-                status_designer: "terkirim",
+                status: "terkirim",
               })
               .then((response) => {
                 refetch()
