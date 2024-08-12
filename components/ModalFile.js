@@ -5,6 +5,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import axios from "axios"
 const ModalFile = ({ orderId, refetch, role, files = [] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [loadingUpload, setLoadingUpload] = useState(false)
   const [fileList, setFileList] = useState([])
   const showModal = () => {
     setIsModalOpen(true)
@@ -24,10 +25,12 @@ const ModalFile = ({ orderId, refetch, role, files = [] }) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+        setLoadingUpload(true)
         // Handle progress, paused, and running state changes
         console.log("Upload is in progress...")
       },
       (error) => {
+        setLoadingUpload(false)
         onError(error)
         message.error(`${file.name} file upload failed.`)
         console.error("File upload failed:", error)
@@ -36,8 +39,9 @@ const ModalFile = ({ orderId, refetch, role, files = [] }) => {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
           onSuccess(null, uploadTask.snapshot)
+          console.log("File upload downloadURL:", downloadURL)
           message.success(`${file.name} file uploaded successfully`)
-
+          setLoadingUpload(false)
           const newFileLists = [
             ...fileList,
             {
@@ -64,10 +68,12 @@ const ModalFile = ({ orderId, refetch, role, files = [] }) => {
                 files: newFileLists,
               })
               .then((response) => {
+                console.log(response, "response")
                 refetch()
               })
           }
         } catch (error) {
+          setLoadingUpload(false)
           onError(error)
           message.error(`${file.name} file upload failed.`)
           console.error("Failed to get download URL:", error)
@@ -132,6 +138,7 @@ const ModalFile = ({ orderId, refetch, role, files = [] }) => {
                   return (
                     <Button
                       type="primary"
+                      loading={loadingUpload}
                       className="bg-blue-800"
                       onClick={() => window.open(record.file_url, "_blank")}
                     >

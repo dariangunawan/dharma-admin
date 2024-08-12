@@ -14,8 +14,9 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "PUT") {
-    const { status, status_designer, orderId } = req.body
+    const { status, status_designer, files, orderId } = req.body
     const order = await Order.findByIdAndUpdate(orderId, {
+      files,
       status,
       status_designer,
     })
